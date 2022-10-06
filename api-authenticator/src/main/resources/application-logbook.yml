@@ -1,0 +1,48 @@
+logbook:
+  exclude:
+    - /admin/**
+    - /auditevents
+    - /beans
+    - /conditions
+    - /configprops
+    - /env
+    - /flyway
+    - /health
+    - /heapdump
+    - /info
+    - /liquibase
+    - /logfile
+    - /loggers
+    - /metrics
+    - /prometheus
+    - /scheduledtasks
+    - /sessions
+    - /shutdown
+    - /threaddump
+    - /health
+    - /info
+    - /metrics
+    - /trace
+    - /mappings
+    - /webjars/**
+    - /actuator/health
+  filter.enabled: true
+  format.style: json
+  obfuscate:
+    headers:
+      - Authorization
+      - x-api-key
+      - X-Secret
+      - password
+    parameters:
+      - access_token
+      - open_id
+      - id_token
+      - password
+      - refreshToken
+      - refresh_token
+      - accessToken
+  write:
+    category: http.wire-log
+    level: INFO
+    chunk-size: 2147483647

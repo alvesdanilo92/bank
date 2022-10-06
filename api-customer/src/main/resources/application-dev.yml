@@ -1,0 +1,11 @@
+spring.jpa:
+  hibernate.ddl-auto: none
+  show-sql: true
+spring.datasource:
+  url: jdbc:mysql://localhost:3306/db_bank_customer
+  username: usr_bank_authenticator
+  password: INgULTUMNalE
+  driver-class-name: com.mysql.jdbc.Driver
+
+hosts:
+  api-authenticator: http://localhost:5000

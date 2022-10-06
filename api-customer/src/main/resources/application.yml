@@ -1,0 +1,47 @@
+server:
+  port: 5001
+  
+errors:
+  internalOrigin: 'INTERNAL - API CUSTOMER'
+  gatewayException:
+    code: C0001
+    message: Internal Error
+    developerMessage: Internal Error
+  customerAlreadyHasAnOpenAccount:
+    code: C0002
+    message: Customer already has an open account
+    developerMessage: System does not allow two active accounts for the same customer
+    data:
+      title: Unable to open a new account
+      subtitle: You already have an open account
+  invalidAccount:
+    code: C0003
+    message: Account not found
+    developerMessage: There is no active account for the informed document
+    data:
+      title: Account not found
+      subtitle: Check that the information provided is correct
+    
+resttemplate:
+  connectTimeout: 3000
+  readTimeout: 3000
+
+bank:
+  default-agency: "0001"
+
+authorization:
+  urlValidate: ${hosts.api-authenticator}/authenticator/validate
+
+integrations:
+  create-user-service-url: ${hosts.api-authenticator}/authenticator/create
+  deactivate-user-service-url: ${hosts.api-authenticator}/authenticator/deactivate
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: "*"
+        exclude: "env,beans"
+
+logging.level.org.zalando.logbook: TRACE
+logging.level.http.wire-log: TRACE

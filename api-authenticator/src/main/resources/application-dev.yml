@@ -1,0 +1,14 @@
+jwt.secret: bXEXVlynOcIiDmc5nhjq5SB9XaKCVhoddZdYJyB87ATJBYgBNrT9h2LegOQdr69al6vat7lxNpH4Zh9Tj6U0kj9iy8as3asdas
+
+spring:
+  jpa:
+    hibernate.ddl-auto: none
+    show-sql: true
+  datasource:
+    url: jdbc:mysql://localhost:3306/db_bank_authenticator
+    username: usr_bank_authenticator
+    password: atErciDetACh
+    driver-class-name: com.mysql.jdbc.Driver
+
+hosts:
+  api-customer: http://localhost:5001

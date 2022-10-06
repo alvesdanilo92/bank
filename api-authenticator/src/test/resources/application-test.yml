@@ -1,0 +1,17 @@
+jwt.secret: bXEXVlynOcIiDmc5nhjq5SB9XaKCVhodihgbnkjnskbdkaFHujlj79uyjnKJkUGWQpkjasngvgfpuhmkiu097assASbuasSPOd
+
+spring:
+  jpa:
+    hibernate.ddl-auto: create-drop
+    show-sql: true
+  datasource:
+    url: jdbc:h2:mem:db;DB_CLOSE_DELAY=-1
+    username: sa
+    password: sa
+    driver-class-name: org.h2.Driver
+  flyway:
+    enabled: false
+    baseline-on-migrate: true
+
+hosts:
+  api-customer: http://localhost

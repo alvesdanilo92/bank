@@ -1,0 +1,29 @@
+jwt.get.token.uri: "/authenticator/authenticate"
+jwt.validity: 1200000 #20 min
+
+server:
+  port: 5000
+  error:
+    include-stacktrace: never
+
+integrations:
+  check-integrity-service-url: ${hosts.api-customer}/customer/account/validate
+
+errors:
+  internalOrigin: 'INTERNAL - API AUTHENTICATOR'
+  userNotFound:
+    code: A0001
+    message: Invalid username or password
+    developerMessage: The user entered does not exist in the database or is inactive
+  userDisabled:
+    code: A0002
+    message: Invalid username or password
+    developerMessage: The user is disabled
+  invalidCredentials:
+    code: A0003
+    message: Invalid username or password
+    developerMessage: Invalid username or password
+  userAlreadyExists:
+    code: A0004
+    message: User already exists
+    developerMessage: There is already an active user for the informed document

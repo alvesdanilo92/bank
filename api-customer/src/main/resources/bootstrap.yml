@@ -1,0 +1,11 @@
+spring:
+  application:
+    name: api-customer
+    serviceId: api-customer
+  jackson:
+    default-property-inclusion: NON_EMPTY
+  profiles:
+    active: ${SPRING_PROFILES_ACTIVE:dev,logbook}
+  flyway:
+    enabled: false
+    baseline-on-migrate: true
