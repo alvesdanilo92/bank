@@ -3,7 +3,7 @@ spring.jpa:
   show-sql: true
 spring.datasource:
   url: jdbc:mysql://localhost:3306/db_bank_customer
-  username: usr_bank_authenticator
+  username: usr_bank_customer
   password: INgULTUMNalE
   driver-class-name: com.mysql.jdbc.Driver
 

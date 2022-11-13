@@ -12,8 +12,9 @@
     <artifactId>api-authenticator</artifactId>
 
     <properties>
-        <maven.compiler.source>11</maven.compiler.source>
-        <maven.compiler.target>11</maven.compiler.target>
+        <maven.compiler.source>17</maven.compiler.source>
+        <maven.compiler.target>17</maven.compiler.target>
+        <spring.version>2.7.5</spring.version>
     </properties>
 
     <dependencies>
@@ -26,13 +27,13 @@
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-security</artifactId>
-            <version>2.7.4</version>
+            <version>${spring.version}</version>
         </dependency>
 
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-data-jpa</artifactId>
-            <version>2.7.4</version>
+            <version>${spring.version}</version>
         </dependency>
 
         <dependency>
@@ -78,7 +79,7 @@
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-test</artifactId>
-            <version>2.7.4</version>
+            <version>${spring.version}</version>
             <scope>test</scope>
         </dependency>
         <dependency>

@@ -7,5 +7,5 @@ spring:
   profiles:
     active: ${SPRING_PROFILES_ACTIVE:dev,logbook}
   flyway:
-    enabled: false
+    enabled: true
     baseline-on-migrate: true
