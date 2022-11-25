@@ -1,0 +1,510 @@
+{
+	"info": {
+		"_postman_id": "d6cbbe7a-7ca9-4d5a-bae7-01a2ad32b16f",
+		"name": "Bank",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "utils",
+			"item": [
+				{
+					"name": "Create Account",
+					"event": [
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									"const people = [",
+									"    {",
+									"        name: \"Harry Potter\",",
+									"        birth: \"1980-07-31\",",
+									"        gender: \"M\"",
+									"    },",
+									"    {",
+									"        name: \"Hermione Granger\",",
+									"        birth: \"1979-09-19\",",
+									"        gender: \"M\"",
+									"    },",
+									"    {",
+									"        name: \"Ronald Weasley\",",
+									"        birth: \"1980-03-01\",",
+									"        gender: \"M\"",
+									"    },",
+									"    {",
+									"        name: \"Albus Dumbledore\",",
+									"        birth: \"1881-08-01\",",
+									"        gender: \"M\"",
+									"    },",
+									"    {",
+									"        name: \"Severus Snape\",",
+									"        birth: \"1960-01-09\",",
+									"        gender: \"M\"",
+									"    },",
+									"    {",
+									"        name: \"Rubeus Hagrid\",",
+									"        birth: \"1928-12-06\",",
+									"        gender: \"M\"",
+									"    },",
+									"    {",
+									"        name: \"Sirius Black\",",
+									"        birth: \"1959-11-03\",",
+									"        gender: \"M\"",
+									"    },",
+									"    {",
+									"        name: \"Minerva McGonagall\",",
+									"        birth: \"1885-10-04\",",
+									"        gender: \"M\"",
+									"    }",
+									"]",
+									"",
+									"const create_array = (total, numero) => Array.from(Array(total), () => number_random(numero));",
+									"const number_random = (number) => (Math.round(Math.random() * number));",
+									"const mod = (dividendo, divisor) => Math.round(dividendo - (Math.floor(dividendo / divisor) * divisor));",
+									"",
+									"const generateDocument = () => {",
+									"  let n = 9;",
+									"  let [n1, n2, n3, n4, n5, n6, n7, n8, n9] = create_array(9, n);",
+									"",
+									"  let d1 = n9 * 2 + n8 * 3 + n7 * 4 + n6 * 5 + n5 * 6 + n4 * 7 + n3 * 8 + n2 * 9 + n1 * 10;",
+									"  d1 = 11 - (mod(d1, 11));",
+									"  if (d1 >= 10) d1 = 0;",
+									"",
+									"  let d2 = d1 * 2 + n9 * 3 + n8 * 4 + n7 * 5 + n6 * 6 + n5 * 7 + n4 * 8 + n3 * 9 + n2 * 10 + n1 * 11;",
+									"  d2 = 11 - (mod(d2, 11));",
+									"  if (d2 >= 10) d2 = 0;",
+									"",
+									"    return `${n1}${n2}${n3}${n4}${n5}${n6}${n7}${n8}${n9}${d1}${d2}`;",
+									"}",
+									"",
+									"const accountOpen = person => {",
+									"    pm.sendRequest({",
+									"        url: `${environment.UrlApiCustomer}/customer/account/open`,",
+									"        method: 'POST',",
+									"        header: {",
+									"            'Content-Type': 'application/json',",
+									"        },",
+									"        body: JSON.stringify({...person, ...{\"password\": environment.password}})",
+									"    }, (err, res) => {",
+									"        let account = res.json().results",
+									"        console.log(account)",
+									"        pm.environment.set(\"document\", person.document)",
+									"        pm.environment.set(\"number\", account.number)",
+									"        pm.environment.set(\"digit\", account.digit)",
+									"        pm.environment.set(\"agency\", account.agency)",
+									"    })",
+									"}",
+									"",
+									"",
+									"const accountAuth = () => {",
+									"   ",
+									"}",
+									"",
+									"var person = people[Math.floor(Math.random() * people.length)]",
+									"person.document = generateDocument()",
+									"accountOpen(person)"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							},
+							{
+								"key": "Authorization",
+								"value": "Bearer {{token}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"number\": \"{{number}}\",\n    \"digit\": \"{{digit}}\",\n    \"agency\": \"{{agency}}\",\n    \"document\": \"{{document}}\"\n}"
+						},
+						"url": {
+							"raw": "{{UrlApiCustomer}}/customer/account/validate",
+							"host": [
+								"{{UrlApiCustomer}}"
+							],
+							"path": [
+								"customer",
+								"account",
+								"validate"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Authenticate",
+					"event": [
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									"const auth = () => {",
+									"    pm.sendRequest({",
+									"        url: `${environment.UrlApiAuthenticator}/authenticator/authenticate`,",
+									"        method: 'POST',",
+									"        header: {",
+									"            'Content-Type': 'application/json',",
+									"        },",
+									"        body: JSON.stringify({\"username\": environment.document, \"password\": environment.password})",
+									"    }, (err, res) => {",
+									"        let r = res.json().results",
+									"        console.log(res)",
+									"        pm.environment.set(\"token\", r.token)",
+									"    })",
+									"}",
+									"",
+									"auth()"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							},
+							{
+								"key": "Authorization",
+								"value": "Bearer {{token}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"number\": \"{{number}}\",\n    \"digit\": \"{{digit}}\",\n    \"agency\": \"{{agency}}\",\n    \"document\": \"{{document}}\"\n}"
+						},
+						"url": {
+							"raw": "{{UrlApiCustomer}}/customer/account/validate",
+							"host": [
+								"{{UrlApiCustomer}}"
+							],
+							"path": [
+								"customer",
+								"account",
+								"validate"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "api-authenticator",
+			"item": [
+				{
+					"name": "create",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "default"
+							},
+							{
+								"key": "document",
+								"value": "{{document}}",
+								"type": "default"
+							},
+							{
+								"key": "password",
+								"value": "{{password}}",
+								"type": "default"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"number\": \"{{number}}\",\n  \"digit\": \"{{digit}}\",\n  \"agency\": \"{{agency}}\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{UrlApiAuthenticator}}/authenticator/create",
+							"host": [
+								"{{UrlApiAuthenticator}}"
+							],
+							"path": [
+								"authenticator",
+								"create"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "authenticate",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "default"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"username\": \"{{document}}\",\n  \"password\": \"{{password}}\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{UrlApiAuthenticator}}/authenticator/authenticate",
+							"host": [
+								"{{UrlApiAuthenticator}}"
+							],
+							"path": [
+								"authenticator",
+								"authenticate"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "validate",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "default"
+							},
+							{
+								"key": "Authorization",
+								"value": "Bearer {{token}}",
+								"type": "default"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{UrlApiAuthenticator}}/authenticator/validate",
+							"host": [
+								"{{UrlApiAuthenticator}}"
+							],
+							"path": [
+								"authenticator",
+								"validate"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "deactivate",
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "default"
+							},
+							{
+								"key": "Authorization",
+								"value": "Bearer {{token}}",
+								"type": "default"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{UrlApiAuthenticator}}/authenticator/deactivate",
+							"host": [
+								"{{UrlApiAuthenticator}}"
+							],
+							"path": [
+								"authenticator",
+								"deactivate"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "api-customer",
+			"item": [
+				{
+					"name": "accounts",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "default"
+							},
+							{
+								"key": "Authorization",
+								"value": "Bearer {{token}}",
+								"type": "default"
+							}
+						],
+						"url": {
+							"raw": "{{UrlApiCustomer}}/customer/accounts",
+							"host": [
+								"{{UrlApiCustomer}}"
+							],
+							"path": [
+								"customer",
+								"accounts"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "accounts validate",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "default"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"number\": \"{{number}}\",\n    \"digit\": \"{{digit}}\",\n    \"agency\": \"{{agency}}\",\n    \"document\": \"{{document}}\"\n}"
+						},
+						"url": {
+							"raw": "{{UrlApiCustomer}}/customer/account/validate",
+							"host": [
+								"{{UrlApiCustomer}}"
+							],
+							"path": [
+								"customer",
+								"account",
+								"validate"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "accounts open",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "default"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"name\": \"Alvo Percival Wulfric Brian Dumbledore\",\n  \"document\": \"{{document}}\",\n  \"birth\": \"1881-08-01\",\n  \"gender\": \"M\",\n  \"password\": \"{{password}}\"\n}"
+						},
+						"url": {
+							"raw": "{{UrlApiCustomer}}/customer/account/open",
+							"host": [
+								"{{UrlApiCustomer}}"
+							],
+							"path": [
+								"customer",
+								"account",
+								"open"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "accounts close",
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "default"
+							},
+							{
+								"key": "Authorization",
+								"value": "Bearer {{token}}",
+								"type": "default"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "{{UrlApiCustomer}}/customer/account/close",
+							"host": [
+								"{{UrlApiCustomer}}"
+							],
+							"path": [
+								"customer",
+								"account",
+								"close"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		}
+	],
+	"variable": [
+		{
+			"key": "number",
+			"value": ""
+		},
+		{
+			"key": "digit",
+			"value": ""
+		},
+		{
+			"key": "agency",
+			"value": ""
+		},
+		{
+			"key": "document",
+			"value": ""
+		}
+	]
+}

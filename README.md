@@ -17,9 +17,9 @@ To run the unit tests, we are using an in-memory database that does not require 
 A option is to use [Docker](https://www.docker.com/) to upload a MySql database. And for that, I left a "docker-compose" ready to use.
 
 ```
-cd src\main\resources\docker\mysql
+cd src/main/resources/docker/mysql
 docker-compose up -d
-cd ..\..\..\..\..
+cd ../../../../..
 ```
 
 # Future

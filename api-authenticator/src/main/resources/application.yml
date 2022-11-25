@@ -2,7 +2,7 @@ jwt.get.token.uri: "/authenticator/authenticate"
 jwt.validity: 1200000 #20 min
 
 server:
-  port: 5000
+  port: 5001
   error:
     include-stacktrace: never
 

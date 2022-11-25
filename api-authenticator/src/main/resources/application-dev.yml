@@ -11,4 +11,4 @@ spring:
     driver-class-name: com.mysql.jdbc.Driver
 
 hosts:
-  api-customer: http://localhost:5001
+  api-customer: http://localhost:5002
