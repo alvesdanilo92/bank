@@ -39,6 +39,7 @@ import static io.restassured.RestAssured.given;
 @RunWith(SpringJUnit4ClassRunner.class)
 class ApiCustomerControllerTest {
 
+    private static final String CREATE_AUTHENTICATION_RESPONSE_BODY_JSON_PATH = "src/test/resources/data/json/CreateAuthenticationResponse.json";
     private static final String VALIDATE_ACCOUNT_REQUEST_BODY_JSON_PATH = "src/test/resources/data/json/ValidateAccountRequestBody.json";
     private static final String OPEN_ACCOUNT_REQUEST_BODY_JSON_PATH = "src/test/resources/data/json/OpenAccountRequestBody.json";
 
@@ -116,6 +117,7 @@ class ApiCustomerControllerTest {
 
     @Test
     void validateAccount_whenAccountExists_shouldReturnSuccessButNoContent() throws IOException {
+
         final String json = Files.readString(Path.of(VALIDATE_ACCOUNT_REQUEST_BODY_JSON_PATH));
 
         deleteCustomer();
@@ -152,8 +154,14 @@ class ApiCustomerControllerTest {
 
     @Test
     void openAccount_whenThereIsNoOpenAccount_shouldOpenAnAccountAndReturnAccountData() throws IOException {
-        mockWebServer.enqueue(new MockResponse().setResponseCode(HttpStatus.CREATED.value()));
+        final String jsonResponse = Files.readString(Path.of(CREATE_AUTHENTICATION_RESPONSE_BODY_JSON_PATH));
         final String json = Files.readString(Path.of(OPEN_ACCOUNT_REQUEST_BODY_JSON_PATH));
+
+        mockWebServer.enqueue(new MockResponse()
+                .addHeader("Content-Type", "application/json")
+                .setBody(jsonResponse)
+                .setResponseCode(HttpStatus.CREATED.value()));
+
         deleteCustomer();
 
         given()
@@ -217,5 +225,4 @@ class ApiCustomerControllerTest {
         var accountModel = FactoryUtils.createAccountModel(peopleModel.getId());
         accountsRepository.save(accountModel);
     }
-
 }

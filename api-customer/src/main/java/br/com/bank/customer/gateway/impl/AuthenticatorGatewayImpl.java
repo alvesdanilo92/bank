@@ -3,6 +3,7 @@ package br.com.bank.customer.gateway.impl;
 import br.com.bank.customer.config.properties.IntegrationsProperties;
 import br.com.bank.customer.gateway.AuthenticatorGateway;
 import br.com.bank.customer.gateway.data.request.CreateUserGatewayRequest;
+import br.com.bank.customer.gateway.data.response.CreateAuthenticationResponse;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.MediaType;
 import org.springframework.stereotype.Component;
@@ -29,7 +30,7 @@ public class AuthenticatorGatewayImpl implements AuthenticatorGateway {
                 .header("password", password)
                 .body(Mono.just(request), CreateUserGatewayRequest.class)
                 .retrieve()
-                .bodyToMono(Void.class)
+                .bodyToMono(CreateAuthenticationResponse.class)
                 .block();
     }
 

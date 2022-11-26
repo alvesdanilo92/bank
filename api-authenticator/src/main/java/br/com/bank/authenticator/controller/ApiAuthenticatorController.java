@@ -3,6 +3,7 @@ package br.com.bank.authenticator.controller;
 import br.com.bank.authenticator.controller.converter.CreateAuthenticationConverter;
 import br.com.bank.authenticator.controller.data.request.AccountRequest;
 import br.com.bank.authenticator.controller.data.request.JwtRequest;
+import br.com.bank.authenticator.controller.data.response.CreateAuthenticationResponse;
 import br.com.bank.authenticator.controller.data.response.JwtResponse;
 import br.com.bank.authenticator.entity.UserAccountEntity;
 import br.com.bank.authenticator.usecase.AuthenticateUseCase;
@@ -51,11 +52,11 @@ public class ApiAuthenticatorController {
 
     @PostMapping("/create")
     @ResponseStatus(HttpStatus.CREATED)
-    public void createAuthentication(@RequestHeader @NotEmpty @CPF String document,
-                                     @RequestHeader @NotEmpty @Length( min = 6, max = 6 ) String password,
-                                     @Valid @RequestBody AccountRequest accountRequest){
+    public CreateAuthenticationResponse createAuthentication(@RequestHeader @NotEmpty @CPF String document,
+                                                             @RequestHeader @NotEmpty @Length( min = 6, max = 6 ) String password,
+                                                             @Valid @RequestBody AccountRequest accountRequest){
         var newUserEntity = createAuthenticationConverter.toNewUserEntity(accountRequest, document, password);
-        createUserUseCase.execute(newUserEntity);
+        return createUserUseCase.execute(newUserEntity);
     }
 
     @PutMapping("/deactivate")

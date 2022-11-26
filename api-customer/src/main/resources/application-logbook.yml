@@ -42,6 +42,7 @@ logbook:
       - refreshToken
       - refresh_token
       - accessToken
+      - token
   write:
     category: http.wire-log
     level: INFO

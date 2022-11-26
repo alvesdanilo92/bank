@@ -1,5 +1,6 @@
 package br.com.bank.authenticator.usecase.impl;
 
+import br.com.bank.authenticator.controller.data.response.CreateAuthenticationResponse;
 import br.com.bank.authenticator.entity.NewUserEntity;
 import br.com.bank.authenticator.gateway.AccountGateway;
 import br.com.bank.authenticator.gateway.CustomerGateway;
@@ -24,11 +25,11 @@ public class CreateUserUseCaseImpl implements CreateUserUseCase {
     }
 
     @Override
-    public void execute(NewUserEntity newUserEntity) {
+    public CreateAuthenticationResponse execute(NewUserEntity newUserEntity) {
         customerGateway.checkIntegrity(createUserUseCaseConverter.toCheckIntegrityGatewayRequest(newUserEntity));
         loginGateway.createUser(newUserEntity);
         accountGateway.addAccount(newUserEntity);
 
-
+        return new CreateAuthenticationResponse("User created successfully");
     }
 }
