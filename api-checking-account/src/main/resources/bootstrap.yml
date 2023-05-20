@@ -1,0 +1,11 @@
+spring:
+  application:
+    name: api-checking-account
+    serviceId: api-checking-account
+  jackson:
+    default-property-inclusion: NON_EMPTY
+  profiles:
+    active: ${SPRING_PROFILES_ACTIVE:dev,logbook}
+  flyway:
+    enabled: true
+    baseline-on-migrate: true

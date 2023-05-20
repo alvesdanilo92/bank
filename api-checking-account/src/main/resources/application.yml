@@ -1,0 +1,33 @@
+server:
+  port: 5001
+  
+errors:
+  internalOrigin: 'INTERNAL - API CHECKING ACCOUNT'
+  gatewayException:
+    code: C0001
+    message: Internal Error
+    developerMessage: Internal Error
+
+resttemplate:
+  connectTimeout: 3000
+  readTimeout: 3000
+
+bank:
+  default-agency: "0001"
+
+authorization:
+  urlValidate: ${hosts.api-authenticator}/authenticator/validate
+
+integrations:
+  create-user-service-url: ${hosts.api-authenticator}/authenticator/create
+  deactivate-user-service-url: ${hosts.api-authenticator}/authenticator/deactivate
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: "*"
+        exclude: "env,beans"
+
+logging.level.org.zalando.logbook: TRACE
+logging.level.http.wire-log: TRACE

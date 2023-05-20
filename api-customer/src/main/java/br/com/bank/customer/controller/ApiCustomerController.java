@@ -39,8 +39,7 @@ public class ApiCustomerController {
 
 	@GetMapping("accounts")
 	public AccountsResponse getAccounts(
-			@RequestAttribute("UserAccount") UserAccount userAccount,
-			@RequestHeader("Authorization") String authorization)  {
+			@RequestAttribute("UserAccount") UserAccount userAccount)  {
 		return accountsUseCase.execute(userAccount.getDocument());
 	}
 

@@ -1,0 +1,75 @@
+server.port: 5003
+spring:
+  datasource:
+    driver-class-name: org.h2.Driver
+    username: sa
+    url: jdbc:h2:mem:db;DB_CLOSE_DELAY=-1
+    password: ''
+  h2:
+    console:
+      enabled: 'true'
+      path: /h2
+  jpa:
+    properties:
+      hibernate:
+        dialect: org.hibernate.dialect.H2Dialect
+    show-sql: 'true'
+    hibernate:
+      ddl-auto: update
+graphql:
+  servlet:
+    mapping: /graphql
+    corsEnabled: 'true'
+    enabled: 'true'
+
+authorization:
+  urlValidate: ${hosts.api-authenticator}/authenticator/validate
+
+logbook:
+  exclude:
+    - /admin/**
+    - /auditevents
+    - /beans
+    - /conditions
+    - /configprops
+    - /env
+    - /flyway
+    - /health
+    - /heapdump
+    - /info
+    - /liquibase
+    - /logfile
+    - /loggers
+    - /metrics
+    - /prometheus
+    - /scheduledtasks
+    - /sessions
+    - /shutdown
+    - /threaddump
+    - /health
+    - /info
+    - /metrics
+    - /trace
+    - /mappings
+    - /webjars/**
+    - /actuator/health
+  filter.enabled: true
+  format.style: json
+  obfuscate:
+    headers:
+      - Authorization
+      - x-api-key
+      - X-Secret
+      - password
+    parameters:
+      - access_token
+      - open_id
+      - id_token
+      - password
+      - refreshToken
+      - refresh_token
+      - accessToken
+  write:
+    category: http.wire-log
+    level: INFO
+    chunk-size: 2147483647

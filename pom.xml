@@ -13,6 +13,8 @@
         <module>api-customer</module>
         <module>lib-http-commons</module>
         <module>lib-authorization</module>
+        <module>api-checking-account</module>
+        <module>graphql-spring-boot</module>
     </modules>
 
     <properties>
